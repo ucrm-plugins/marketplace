@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+
+Index.twig
+<pre>{{ app.sessionUser != null ? app.sessionUser|json_encode : "" }}</pre>
+<pre>{{ app.env }}</pre>
+<pre>{{ link("/index.html") }}</pre>
+<pre>{{ base_url() }}</pre>
+<pre>{{ current_path() }}</pre>
+
+</body>
+</html>

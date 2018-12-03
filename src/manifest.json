@@ -1,0 +1,38 @@
+{
+    "version": "1",
+    "information": {
+        "name": "marketplace",
+        "displayName": "Marketplace Plugin",
+        "description": "A simple Marketplace Plugin for both free and paid UCRM Add-Ons.",
+        "url": "https://github.com/ucrm-plugins/marketplace",
+        "version": "1.0.0",
+        "ucrmVersionCompliancy": {
+            "min": "2.14.1",
+            "max": null
+        },
+        "author": "Ryan Spaeth <rspaeth@mvqn.net>"
+    },
+    "menu": [
+        {
+            "key": "Add-Ons",
+            "label": "Marketplace",
+            "type": "admin",
+            "target": "iframe"
+        }
+    ],
+    "configuration": [
+        {
+            "key": "username",
+            "label": "Marketplace Username",
+            "description": "The username you used when registering for the Marketplace.",
+            "required": 1
+        },
+        {
+            "key": "password",
+            "label": "Marketplace Password",
+            "description": "The password you used when registering for the Marketplace.",
+            "required": 1
+        }
+    ]
+}
+

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Page Not Found</title>
+</head>
+<body style="margin:0; padding:30px; font:12px/1.5 Helvetica,Arial,Verdana,sans-serif;">
+    <h1 style="margin:0; font-size:48px; font-weight:normal; line-height:48px;">Page Not Found</h1>
+    <p style="text-align:justify;">
+        The page you are looking for could not be found. Check the address bar
+        to ensure your URL is spelled correctly. If all else fails, you can
+        visit the Plugin's home page at the link below.
+    </p>
+
+    {# @var \UCRM\Routing\Models\AppGlobals www #}
+
+    {% if app.env == "dev" or app.debug %}
+
+        Virtual Route:
+        <pre style="margin-top:0;">
+            {{- "    " }}{{ vRoute -}}
+        </pre>
+
+        Known Routes:
+        <pre style="margin-top:0;">
+            {%- for route in router.getRoutes -%}
+                {{ "    " }}{{ route.getPattern }}{{ "\n" }}
+            {%- endfor -%}
+        </pre>
+
+    {% endif %}
+
+    <a href="{{ link("/") }}">Visit the Home Page</a>
+</body>
+</html>

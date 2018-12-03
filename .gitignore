@@ -1,0 +1,19 @@
+
+
+
+# Exclude reserved files.
+src/data/config.json
+src/data/plugin.log
+src/ucrm.json
+
+# Exclude development files.
+.idea/
+.env
+
+# Exclude cached files.
+**/.cache/
+
+# Exclude composer's vendor folder.
+src/vendor/
+
+

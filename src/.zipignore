@@ -1,0 +1,14 @@
+
+# Exclude this file
+.zipignore
+
+# Exclude reserved files
+data/config.json
+data/plugin.log
+ucrm.json
+
+# Exclude development files
+bin/composer.php
+bin/translations.php
+
+app/Settings.php
