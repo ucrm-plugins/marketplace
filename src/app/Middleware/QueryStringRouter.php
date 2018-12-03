@@ -31,26 +31,8 @@ class QueryStringRouter
     // PROPERTIES
     // =================================================================================================================
 
-    protected $container;
-
     /** @var array A collection of paths to search for files when routing. */
     protected $paths;
-
-    // =================================================================================================================
-    // CONSTRUCTOR/DESTRUCTOR
-    // =================================================================================================================
-
-    /**
-     * QueryStringRouter constructor.
-     *
-     * @param ContainerInterface $container
-     * @param array $paths
-     */
-    public function __construct()
-    {
-        //$this->container = $container;
-        //$this->paths = $paths;
-    }
 
     // =================================================================================================================
     // AUTO EXTENSIONS
@@ -134,10 +116,6 @@ class QueryStringRouter
 
         parse_str($queryString, $query);
 
-        //var_dump($route);
-        //var_dump($queryString);
-
-
         $uri = $request->getUri()
             ->withPath($route)
             ->withQuery($queryString);
@@ -150,12 +128,7 @@ class QueryStringRouter
         $_GET = $query;
         $_SERVER["QUERY_STRING"] = $queryString;
 
-        //var_dump($_SERVER);
-
-        //var_dump($request->getUri());
-
         $response = $next($request, $response);
-
 
         return $response;
     }

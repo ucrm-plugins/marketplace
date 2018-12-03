@@ -4,21 +4,23 @@ require_once __DIR__."/vendor/autoload.php";
 
 use MVQN\Localization\Translator;
 use MVQN\Localization\Exceptions\TranslatorException;
-
 use MVQN\REST\RestClient;
+use MVQN\Twig\Extensions\SwitchExtension;
 
+use UCRM\Common\Config;
 use UCRM\Common\Log;
 use UCRM\Common\Plugin;
 
-use UCRM\Common\Config;
-
+use App\Middleware\Twig\PluginExtension;
 use App\Settings;
 
 use Slim\Container;
+use Slim\Http\Environment;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Slim\Http\Uri;
+use Slim\Views\TwigExtension;
 
-use Slim\Http\Environment;
 
 /**
  * bootstrap.php
@@ -29,7 +31,7 @@ use Slim\Http\Environment;
  */
 
 // =====================================================================================================================
-// PLUGIN SETTINGS
+// PLUGIN ECOSYSTEM
 // =====================================================================================================================
 
 // Initialize the Plugin libraries using this directory as the plugin root!
@@ -39,21 +41,21 @@ Plugin::initialize(__DIR__);
 Plugin::createSettings("App", "Settings", __DIR__);
 
 // =====================================================================================================================
-// REST CLIENT
+// ENVIRONMENT
 // =====================================================================================================================
 
 if(file_exists(__DIR__."/../.env"))
-{
     (new \Dotenv\Dotenv(__DIR__."/../"))->load();
-}
+
+// =====================================================================================================================
+// REST CLIENT
+// =====================================================================================================================
 
 // Generate the REST API URL from either an ENV variable (including from .env file),  or fallback to localhost.
-$restUrl = rtrim(getenv("UCRM_REST_URL") ?: Settings::UCRM_LOCAL_URL ?: "https://localhost/", "/")."/api/v1.0";
-
-//echo $restUrl;
+$restUrl = rtrim(getenv("REST_URL") ?: Settings::UCRM_LOCAL_URL ?: "https://localhost/", "/")."/api/v1.0";
 
 // Configure the REST Client...
-RestClient::setBaseUrl($restUrl); //Settings::UCRM_PUBLIC_URL . "api/v1.0");
+RestClient::setBaseUrl($restUrl);
 RestClient::setHeaders([
     "Content-Type: application/json",
     "X-Auth-App-Key: " . Settings::PLUGIN_APP_KEY
@@ -99,9 +101,7 @@ $container["twig"] = function (Container $container)
 {
     $twig = new \Slim\Views\Twig(
         [
-            //__DIR__ . "/www/",
             __DIR__ . "/app/Views/",
-
         ],
         [
             //'cache' => 'path/to/cache'
@@ -111,23 +111,13 @@ $container["twig"] = function (Container $container)
 
     // Instantiate and add Slim specific extension
     $router = $container->get("router");
-    $uri = \Slim\Http\Uri::createFromEnvironment(new Environment($_SERVER));
+    $uri = Uri::createFromEnvironment(new Environment($_SERVER));
 
-    //$query = $uri->getQuery();
-    //var_dump($query);
-
-    //$route = \App\Middleware\QueryStringRouter::extractRouteFromQueryString($query);
-
-    //$uri = $uri
-    //    ->withPath($route)
-    //    ->withQuery($query);
-
-    //var_dump($uri);
-    $twig->addExtension(new \Slim\Views\TwigExtension($router, $uri));
+    $twig->addExtension(new TwigExtension($router, $uri));
     $twig->addExtension(new Twig_Extension_Debug());
 
-    $twig->addExtension(new \MVQN\Twig\Extensions\SwitchExtension());
-    $twig->addExtension(new \App\Middleware\Twig\PluginExtension($container));
+    $twig->addExtension(new SwitchExtension());
+    $twig->addExtension(new PluginExtension());
 
     return $twig;
 };

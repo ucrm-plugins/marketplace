@@ -26,9 +26,11 @@ if(isset($_GET))
 
 //var_dump($_SERVER);
 echo "<br/>";
-echo "<a href='public/test.html'>Test</a><br/>";
+echo "<a href='public/test.html'>Index</a><br/>";
 echo "<a href='public/user.html'>User</a><br/>";
-echo "<a href='public.php?/index.php'>Test</a><br/>";
+echo "<a href='public.php?route=/index.php'>Test</a><br/>";
+echo "<a href='public.php?route=/client/add.html.twig'>Client</a><br/>";
+
 echo "
 
 <script type='application/javascript'>

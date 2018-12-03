@@ -19,11 +19,11 @@ use App\Settings;
 final class PluginExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
 {
 
-    protected $container;
+    //protected $container;
 
-    public function __construct(Container $container)
+    public function __construct(/*Container $container*/)
     {
-        $this->container = $container;
+        //$this->container = $container;
     }
 
 
@@ -52,39 +52,17 @@ final class PluginExtension extends \Twig_Extension implements \Twig_Extension_G
     {
         return [
             new \Twig_SimpleFunction("link", [$this, "link"]),
-            //new \Twig_SimpleFunction("route", [$this, "route"]),
-            //new \Twig_SimpleFunction("query", [$this, "query"]),
         ];
     }
 
 
     public function link(string $path, bool $relative = true): string
     {
-        $link = (!$relative ? $this->globals->hostUrl.$this->globals->baseUrl : "public.php").
+        $link = (!$relative ? self::$globals["hostUrl"].self::$globals["baseUrl"] : "public.php").
             ($path !== "/" ? "?$path" : "");
 
         return $link;
     }
-
-
-    /*
-    public function route(): ?string
-    {
-        if(isset($_SERVER) && array_key_exists("PLUGIN_ROUTE", $_SERVER))
-            return $_SERVER["PLUGIN_ROUTE"];
-
-        return null;
-    }
-
-    public function query(): ?string
-    {
-        if(isset($_SERVER) && array_key_exists("PLUGIN_QUERY", $_SERVER))
-            return $_SERVER["PLUGIN_QUERY"];
-
-        return null;
-    }
-    */
-
 
 
 
