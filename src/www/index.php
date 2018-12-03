@@ -25,9 +25,21 @@ if(isset($_GET))
     var_dump($_GET);
 
 //var_dump($_SERVER);
+echo "<br/>";
+echo "<a href='public/test.html'>Test</a><br/>";
+echo "<a href='public/user.html'>User</a><br/>";
+echo "<a href='public.php?/index.php'>Test</a><br/>";
+echo "
 
-echo "<a href='public/test.html'>Test</a>";
-echo "<a href='public/user.html'>User</a>";
+<script type='application/javascript'>
+
+    console.clear();
+    console.log('testing');
+    console.log(window.location.href)
+
+</script>
+
+";
 
 //echo "<pre>";
 //var_dump($_SERVER);
