@@ -16,4 +16,4 @@ src/ucrm.json
 # Exclude composer's vendor folder.
 src/vendor/
 
-
+src/app/Settings.php
