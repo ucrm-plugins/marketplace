@@ -11,4 +11,4 @@ ucrm.json
 bin/composer.php
 bin/translations.php
 
-app/Settings.php
+src/App/Settings.php
