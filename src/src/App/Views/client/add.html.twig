@@ -8,7 +8,10 @@
 Client Add (client/add.html.twig)
 
 <pre>{{ link("/index.html", { "testing": 123 }, false) }}</pre>
+<pre>{{ route }}</pre>
+<pre>{{ query|json_encode }}</pre>
 
+<a href="{{ link(route, { "testing": 12345 }) }}">Route/Query</a>
 
 </body>
 </html>

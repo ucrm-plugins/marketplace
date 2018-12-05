@@ -123,7 +123,8 @@ class QueryStringRouter
         $request = $request
             ->withUri($uri)
             ->withQueryParams($query)
-            ->withAttribute("vRoute", $route);
+            ->withAttribute("vRoute", $route)
+            ->withAttribute("vQuery", $query);
 
         $_GET = $query;
         $_SERVER["QUERY_STRING"] = $queryString;

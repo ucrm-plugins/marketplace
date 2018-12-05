@@ -91,9 +91,10 @@ use App\Middleware\PluginAuthentication;
             $router = $container->get("router");
 
             $data = [
-                "request" => $request,
-                "vRoute" => $request->getAttribute("vRoute"),
-                "router" => $router,
+                //"request" => $request,
+                "route" => $request->getAttribute("vRoute"),
+                "query" => $request->getAttribute("vQuery"),
+                //"router" => $router,
             ];
 
             if ((file_exists($assets) && !is_dir($assets)) || (file_exists($templates) && !is_dir($templates)))
