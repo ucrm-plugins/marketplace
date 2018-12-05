@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace App\Middleware\Twig;
 
+use MVQN\Common\Arrays;
 use MVQN\Localization\Translator;
 use Slim\App;
 use Slim\Container;
@@ -18,21 +19,17 @@ use App\Settings;
  */
 final class PluginExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
 {
-
-    //protected $container;
-
-    public function __construct(/*Container $container*/)
-    {
-        //$this->container = $container;
-    }
-
-
-
+    /**
+     * @return string
+     */
     public function getName(): string
     {
         return "plugin";
     }
 
+    /**
+     * @return array
+     */
     public function getTokenParsers(): array
     {
         return [
@@ -40,6 +37,9 @@ final class PluginExtension extends \Twig_Extension implements \Twig_Extension_G
         ];
     }
 
+    /**
+     * @return array
+     */
     public function getFilters(): array
     {
 
@@ -48,6 +48,9 @@ final class PluginExtension extends \Twig_Extension implements \Twig_Extension_G
         ];
     }
 
+    /**
+     * @return array
+     */
     public function getFunctions(): array
     {
         return [
@@ -55,11 +58,34 @@ final class PluginExtension extends \Twig_Extension implements \Twig_Extension_G
         ];
     }
 
-
-    public function link(string $path, bool $relative = true): string
+    /**
+     * @param string $path
+     * @param array $query
+     * @param bool $relative
+     * @return string
+     */
+    public function link(string $path, array $query = [], bool $relative = true): string
     {
+        if(!$relative && self::$globals === null)
+            self::getGlobals();
+
+        //var_dump(self::$globals);
+
         $link = (!$relative ? self::$globals["hostUrl"].self::$globals["baseUrl"] : "public.php").
             ($path !== "/" ? "?$path" : "");
+
+        if ($query !== null && $query !== [])
+        {
+            $queryString = "";
+
+            if (Arrays::is_assoc($query))
+                $queryString = http_build_query($query);
+            else
+                $queryString = implode("&", $query);
+
+            $queryString = htmlspecialchars($queryString);
+            $link .= "&$queryString";
+        }
 
         return $link;
     }
@@ -69,27 +95,14 @@ final class PluginExtension extends \Twig_Extension implements \Twig_Extension_G
     /** @var array */
     protected static $globals;
 
-
-
     public function getGlobals(): array
     {
-        if(self::$globals === null)
-        {
-            self::$globals =
-                [
-                    "env" => Plugin::environment(),
-
-                    "hostUrl" => rtrim(Settings::UCRM_PUBLIC_URL, "/"),
-                    "baseUrl" => "/_plugins/" . Settings::PLUGIN_NAME . "/public.php",
-                    //"baseUrl" => Settings::PLUGIN_PUBLIC_URL,
-                    "homeRoute" => "?/",
-
-                    "locale" => Translator::getCurrentLocale(),
-
-                    "pluginName" => Settings::PLUGIN_NAME,
-
-                ];
-        }
+        self::$globals["env"] = Plugin::environment();
+        self::$globals["hostUrl"] = rtrim(Settings::UCRM_PUBLIC_URL, "/");
+        self::$globals["baseUrl"] = "/_plugins/" . Settings::PLUGIN_NAME . "/public.php";
+        self::$globals["homeRoute"] = "?/";
+        self::$globals["locale"] = Translator::getCurrentLocale();
+        self::$globals["pluginName"] = Settings::PLUGIN_NAME;
 
         return [
             "app" => self::$globals,

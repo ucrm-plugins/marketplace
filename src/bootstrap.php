@@ -38,7 +38,7 @@ use Slim\Views\TwigExtension;
 Plugin::initialize(__DIR__);
 
 // Regenerate the Settings class, in case anything has changed in the manifest.json file.
-Plugin::createSettings("App", "Settings", __DIR__);
+Plugin::createSettings("App", "Settings");
 
 // =====================================================================================================================
 // ENVIRONMENT
@@ -101,7 +101,7 @@ $container["twig"] = function (Container $container)
 {
     $twig = new \Slim\Views\Twig(
         [
-            __DIR__ . "/app/Views/",
+            __DIR__ . "/src/App/Views/",
         ],
         [
             //'cache' => 'path/to/cache'

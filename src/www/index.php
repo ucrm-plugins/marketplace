@@ -35,13 +35,25 @@ echo "
 
 <script type='application/javascript'>
 
-    console.clear();
-    console.log('testing');
-    console.log(window.location.href)
+    //console.clear();
+    //console.log('testing');
+    //console.log(window.location.href)
 
 </script>
 
 ";
+
+echo "
+
+<form method='POST' action='public.php?/submit.php&testing=123'>
+    <input type='hidden' name='username' value='rspaeth' />
+    <input type='hidden' name='password' value='password' />
+    <button type='submit'>Submit</button>
+</form>
+
+";
+
+
 
 //echo "<pre>";
 //var_dump($_SERVER);

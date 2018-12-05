@@ -78,7 +78,6 @@ class PluginAuthentication
 
         // Set the current session user on the container, for later use in the application.
         $this->container["sessionUser"] = $user;
-
         PluginExtension::setGlobal("sessionUser", $user);
 
         // If a valid user is authenticated and

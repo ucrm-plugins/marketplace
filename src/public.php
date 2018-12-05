@@ -85,7 +85,7 @@ use App\Middleware\PluginAuthentication;
             $ext = $args["ext"] ?? "html";
 
             $assets = __DIR__ . "/www/$file.$ext";
-            $templates = __DIR__."/app/Views/$file.$ext";
+            $templates = __DIR__ . "/src/App/Views/$file.$ext";
 
             /** @var \Slim\Router $router */
             $router = $container->get("router");
