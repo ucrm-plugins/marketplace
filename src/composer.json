@@ -41,6 +41,7 @@
             "@php bin/composer.php sync"
         ],
         "create": [
+            "@php bin/composer.php sync",
             "@php bin/composer.php create"
         ],
         "bundle": [
