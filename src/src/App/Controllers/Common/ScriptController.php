@@ -8,7 +8,6 @@ use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-use UCRM\Sessions\SessionUser;
 
 final class ScriptController
 {
@@ -23,36 +22,26 @@ final class ScriptController
                 $file = $args["file"] ?? "index";
                 $ext = $args["ext"] ?? "php";
 
-                //$path = __DIR__ . "/../../../../www/$file.$ext";
                 $path = ASSET_PATH."/$file.$ext";
 
-                /** @var \Slim\Router $router */
-                $router = $container->get("router");
-
                 $data = [
-                    "request" => $request,
-                    "vRoute" => $request->getAttribute("vRoute"),
-                    "router" => $router,
+                    "route" => $request->getAttribute("vRoute"),
+                    "query" => $request->getAttribute("vQuery"),
+                    "user"  => $request->getAttribute("user"),
                 ];
 
                 if(!file_exists($path))
                     return $container->get("notFoundHandler")($request, $response, $data);
 
-                /** @noinspection PhpUnusedLocalVariableInspection */
-                /** @var SessionUser $user */
-                $user = $request->getAttribute("user");
+                /** @noinspection PhpIncludeInspection */
 
                 // Pass execution to the specified PHP file.
                 include $path;
 
                 // In this case, 'index.php' should handle everything and since there is no Response to return, die()!
                 die();
-
             }
         )->add(new PluginAuthentication($container))->setName("script");
-
-
     }
-
 
 }

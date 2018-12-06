@@ -32,11 +32,10 @@ final class AssetController
                     default   :         $contentType = "application/octet-stream";  break; // Excluded by URL RegEx!
                 }
 
-                //$path = realpath(__DIR__ . "/../../../../www/");
-                $path = ASSET_PATH;
+                $path = ASSET_PATH."/$file.$ext";
 
                 if(!$path)
-                    return $response->withStatus(404, "Asset not found!");
+                    return $response->withStatus(404, "Asset '$file.$ext' not found!");
 
                 // Set the response Content-Type header and write the contents of the file to the response body.
                 $response = $response
@@ -47,9 +46,6 @@ final class AssetController
                 return $response;
             }
         )->setName("asset"); // NO Authentication necessary here!
-
-
     }
-
 
 }

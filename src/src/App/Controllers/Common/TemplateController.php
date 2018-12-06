@@ -21,20 +21,13 @@ final class TemplateController
                 $file = $args["file"] ?? "index";
                 $ext = $args["ext"] ?? "html";
 
-                //$assets = __DIR__ . "/../../../../www/$file.$ext";
                 $assets = ASSET_PATH."/$file.$ext";
-
-                //$templates = __DIR__ . "/../../Views/$file.$ext";
                 $templates = VIEWS_PATH."/$file.$ext";
 
-                /** @var \Slim\Router $router */
-                $router = $container->get("router");
-
                 $data = [
-                    //"request" => $request,
                     "route" => $request->getAttribute("vRoute"),
                     "query" => $request->getAttribute("vQuery"),
-                    //"router" => $router,
+                    "user"  => $request->getAttribute("user"),
                 ];
 
                 $twig = $container->get("twig");
