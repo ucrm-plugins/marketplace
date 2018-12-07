@@ -2,40 +2,42 @@
 declare(strict_types=1);
 require_once __DIR__ . "/../vendor/autoload.php";
 
-use UCRM\Sessions\SessionUser;
-
-/** @noinspection PhpUnusedLocalVariableInspection */
-/** @var SessionUser $user */
 
 
 echo "Home Page<br/>";
-
-//var_dump($user);
-
-//if(session_status() === PHP_SESSION_NONE)
-//    session_start();
-
-//if(isset($_SESSION))
-//    var_dump($_SESSION);
-
-//if(isset($_COOKIE))
-//    var_dump($_COOKIE);
-
-if(isset($_GET))
-    var_dump($_GET);
-
-//var_dump($_SERVER);
 echo "<br/>";
-echo "<a href='public/css/iframe.css'>CSS</a><br/>";
-echo "<a href='public.php?/css/iframe.css'>CSS</a><br/>";
 
-echo "<a href='public/user.html?test=12345678'>User</a><br/>";
+// =====================================================================================================================
+// Directly from public/ folder using UCRM functionality.
+// NOTE: These requests are cached, due to being inside an iframe!
+// =====================================================================================================================
+
+// Request a static asset...
+echo "<a href='public/css/iframe.css'>UCRM: CSS</a><br/>";
+
+// Request a static page...
+echo "<a href='public/user.html'>UCRM: User</a><br/>";
+
+echo "<br/>";
+
+// =====================================================================================================================
+// Routed using the QueryStringRouter
+// NOTE: These requests are cached, due to being inside an iframe!
+// =====================================================================================================================
+
+// Request a static asset...
+echo "<a href='public.php?/css/iframe.css'>QSR: CSS</a><br/>";
+
+// Request a static page...
+echo "<a href='public.php?/user.html'>QSR: User</a><br/>";
 
 echo "<a href='public.php?route=/index.php'>Index</a><br/>";
 echo "<a href='public.php?route=/client/add.html.twig'>Client - Add</a><br/>";
 
 echo "<a href='public.php?/example'>Example</a><br/>";
-echo "Test";
+echo "<a href='public.php?/user.html.twig'>Uncached</a><br/>";
+
+
 echo "
 
 <script type='application/javascript'>

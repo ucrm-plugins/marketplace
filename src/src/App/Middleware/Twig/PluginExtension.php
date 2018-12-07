@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace App\Middleware\Twig;
 
 use MVQN\Common\Arrays;
+use MVQN\Common\Strings;
 use MVQN\Localization\Translator;
 use Slim\App;
 use Slim\Container;
@@ -45,8 +46,38 @@ final class PluginExtension extends \Twig_Extension implements \Twig_Extension_G
 
         return [
             //new \Twig_SimpleFilter('without', [$this, 'withoutFilter']),
+            new \Twig_SimpleFilter("uncached", [$this, "uncached"]),
         ];
     }
+
+    public function uncached(string $path)
+    {
+        $uncachedPath = "";
+
+        if(Strings::contains($path, "?"))
+        {
+            $parts = explode("?", $path);
+
+            parse_str($parts[1], $query);
+
+            var_dump($query);
+
+            $query["v"] = (new \DateTime())->getTimestamp();
+            $queryParts = [];
+
+            foreach($query as $key => $value)
+                $queryParts[] = "$key=$value";
+
+            $uncachedPath = $parts[0]."?".implode("&", $queryParts);
+        }
+        else
+        {
+            $uncachedPath = $path."?v=".(new \DateTime())->getTimestamp();
+        }
+
+        return $uncachedPath;
+    }
+
 
     /**
      * @return array
@@ -55,6 +86,7 @@ final class PluginExtension extends \Twig_Extension implements \Twig_Extension_G
     {
         return [
             new \Twig_SimpleFunction("link", [$this, "link"]),
+
         ];
     }
 
@@ -89,6 +121,8 @@ final class PluginExtension extends \Twig_Extension implements \Twig_Extension_G
 
         return $link;
     }
+
+
 
 
 
