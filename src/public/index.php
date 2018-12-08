@@ -8,15 +8,15 @@ echo "Home Page<br/>";
 echo "<br/>";
 
 // =====================================================================================================================
-// Directly from public/ folder using UCRM functionality.
+// Served directly from the 'public/' folder using the new UCRM functionality.
 // NOTE: These requests are cached, due to being inside an iframe!
 // =====================================================================================================================
 
 // Request a static asset...
-echo "<a href='public/css/iframe.css'>UCRM: CSS</a><br/>";
+echo "<a href='".BASE_URL."/css/iframe.css'>UCRM: CSS</a><br/>";
 
 // Request a static page...
-echo "<a href='public/user.html'>UCRM: User</a><br/>";
+echo "<a href='".BASE_URL."/user.html'>UCRM: User</a><br/>";
 
 echo "<br/>";
 

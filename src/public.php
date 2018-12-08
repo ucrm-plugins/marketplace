@@ -3,7 +3,9 @@ declare(strict_types=1);
 require __DIR__ . "/vendor/autoload.php";
 require __DIR__ . "/bootstrap.php";
 
+use App\Settings;
 use App\Controllers;
+use UCRM\Slim\Controllers\Common;
 
 /**
  * Use an immediately invoked function here, to avoid global namespace pollution...
@@ -13,8 +15,17 @@ use App\Controllers;
  */
 (function() use ($app)
 {
-    define("ASSET_PATH", realpath(__DIR__."/public/")); // TODO: Move to public/
+    // -----------------------------------------------------------------------------------------------------------------
+    // CONFIGURATION
+    // -----------------------------------------------------------------------------------------------------------------
+
+    define("ASSET_PATH", realpath(__DIR__."/public/"));
     define("VIEWS_PATH", realpath(__DIR__."/src/App/Views/"));
+
+    define("BASE_URL", isset($_SERVER["HTTP_REFERER"]) ?
+        rtrim(Settings::PLUGIN_PUBLIC_URL, ".php") :    // .../public
+        Settings::PLUGIN_PUBLIC_URL."?");               // .../public.php?
+
 
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -23,15 +34,24 @@ use App\Controllers;
 
     new Controllers\ExampleController($app);
 
-    // TODO: Add additional custom routes here...
+    // TODO: Add additional custom routes here!
+    // ...
+
+
 
     // -----------------------------------------------------------------------------------------------------------------
     // BUILD-IN ROUTES
+    // Note: These controllers should be added last, so the above controllers can override routes as needed.
     // -----------------------------------------------------------------------------------------------------------------
 
-    new Controllers\Common\AssetController($app);
-    new Controllers\Common\TemplateController($app);
-    new Controllers\Common\ScriptController($app);
+    // Append a route handler for static assets.
+    new Common\AssetController($app);
+
+    // Append a route handler for Twig templates.
+    new Common\TemplateController($app);
+
+    // Append a route handler for PHP scripts.
+    new Common\ScriptController($app);
 
     // Run the Slim Framework Application!
     $app->run();

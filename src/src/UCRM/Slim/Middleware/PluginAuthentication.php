@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Middleware;
+namespace UCRM\Slim\Middleware;
 
-use App\Middleware\Twig\PluginExtension;
+use UCRM\Twig\Extensions\PluginExtension;
 use Psr\Container\ContainerInterface as Container;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;

@@ -10,8 +10,9 @@ use MVQN\Twig\Extensions\SwitchExtension;
 use UCRM\Common\Config;
 use UCRM\Common\Log;
 use UCRM\Common\Plugin;
+use UCRM\Twig\Extensions\PluginExtension;
+use UCRM\Slim\Middleware\QueryStringRouter;
 
-use App\Middleware\Twig\PluginExtension;
 use App\Settings;
 
 use Slim\Container;
@@ -117,7 +118,7 @@ $container["twig"] = function (Container $container)
     $twig->addExtension(new Twig_Extension_Debug());
 
     $twig->addExtension(new SwitchExtension());
-    $twig->addExtension(new PluginExtension());
+    $twig->addExtension(new PluginExtension(Settings::class));
 
     return $twig;
 };
@@ -159,7 +160,11 @@ $container['logger'] = function (\Slim\Container $container)
 
 
 
+
+
+
+
 // Applied in Ascending order, bottom up!
-//$www->add(new \UCRM\Routing\Middleware\PluginAuthentication());
-$app->add(new \App\Middleware\QueryStringRouter());
+//$app->add(new \UCRM\Routing\Middleware\PluginAuthentication());
+$app->add(new QueryStringRouter());
 

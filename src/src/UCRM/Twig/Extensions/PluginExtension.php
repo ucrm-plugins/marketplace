@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace App\Middleware\Twig;
+namespace UCRM\Twig\Extensions;
 
 use MVQN\Common\Arrays;
 use MVQN\Common\Strings;
@@ -10,6 +10,7 @@ use Slim\Container;
 use Slim\Router;
 use UCRM\Common\Plugin;
 use App\Settings;
+use UCRM\Common\SettingsBase;
 
 /**
  * Class Extension
@@ -20,6 +21,15 @@ use App\Settings;
  */
 final class PluginExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
 {
+    /** @var string */
+    private $settings;
+
+    public function __construct(string $settings)
+    {
+        $this->settings = $settings;
+    }
+
+
     /**
      * @return string
      */
@@ -131,12 +141,16 @@ final class PluginExtension extends \Twig_Extension implements \Twig_Extension_G
 
     public function getGlobals(): array
     {
+
+        if(!class_exists($this->settings) || !is_subclass_of($this->settings, SettingsBase::class, true))
+            throw new \Exception("A valid Settings class was not found; was Plugin::createSettings() called first?");
+
         self::$globals["env"] = Plugin::environment();
-        self::$globals["hostUrl"] = rtrim(Settings::UCRM_PUBLIC_URL, "/");
-        self::$globals["baseUrl"] = "/_plugins/" . Settings::PLUGIN_NAME . "/public.php";
+        self::$globals["hostUrl"] = rtrim(constant("{$this->settings}::UCRM_PUBLIC_URL"), "/");
+        self::$globals["baseUrl"] = "/_plugins/" . constant("{$this->settings}::PLUGIN_NAME") . "/public.php";
         self::$globals["homeRoute"] = "?/";
         self::$globals["locale"] = Translator::getCurrentLocale();
-        self::$globals["pluginName"] = Settings::PLUGIN_NAME;
+        self::$globals["pluginName"] = constant("{$this->settings}::PLUGIN_NAME");
 
         return [
             "app" => self::$globals,

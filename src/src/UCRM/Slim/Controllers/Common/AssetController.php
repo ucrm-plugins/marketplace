@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Controllers\Common;
+namespace UCRM\Slim\Controllers\Common;
 
 use Slim\App;
 use Slim\Http\Request;
@@ -12,7 +12,7 @@ use Slim\Http\Response;
  *
  * Handles routing and provision of static assets.
  *
- * @package App\Controllers\Common
+ * @package UCRM\Slim\Controllers\Common
  * @author Ryan Spaeth <rspaeth@mvqn.net>
  * @final
  */

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Middleware;
+namespace UCRM\Slim\Middleware;
 
 use MVQN\Common\Strings;
 use Psr\Container\ContainerInterface;
