@@ -10,11 +10,10 @@
             "min": "2.14.1",
             "max": null
         },
-        "author": "Ryan Spaeth <rspaeth@mvqn.net>"
+        "author": "Ryan Spaeth"
     },
     "menu": [
         {
-            "key": "Add-Ons",
             "label": "Marketplace",
             "type": "admin",
             "target": "iframe"

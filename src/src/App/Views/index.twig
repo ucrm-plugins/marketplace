@@ -1,17 +1,211 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
-<body>
+{% extends "common/ucrm.twig" %}
 
-Index.twig
-<pre>{{ app.sessionUser != null ? app.sessionUser|json_encode : "" }}</pre>
-<pre>{{ app.env }}</pre>
-<pre>{{ link("/index.html") }}</pre>
-<pre>{{ base_url() }}</pre>
-<pre>{{ current_path() }}</pre>
+{% block styles %}
+    <link rel="stylesheet" href="?/css/switch.css">
+{% endblock %}
 
-</body>
-</html>
+{% block breadcrumbs %}
+    <h1>
+        <a href="?">Marketplace</a>
+    </h1>
+{% endblock %}
+
+{% block buttons %}
+    <a href="https://github.com/ucrm-plugins/marketplace" target="_blank" class="button button--icon-only">
+        <img src="?/images/github/logo-32px.png" alt="GitHub" height=16>
+    </a>
+{% endblock %}
+
+{# TODO: Fix an issue where scrollbar appears when using "extras"! #}
+{% block extras %}
+{% endblock %}
+
+{% block navigation %}
+    <ul>
+        <li class="selected">
+            <a href="?/index.twig">
+                Add-Ons
+                {# TODO: Create code to dynamically check for updates of installed Add-Ons and output count to the badge! #}
+                <span class="badge badge--warning page-header__navigation__item__count">1</span>
+            </a>
+        </li>
+        <li>
+            <a href="?/account.twig">
+                Account
+                {# TODO: Create code to dynamically check for account notifications and output count to the badge! #}
+                <span class="badge badge--warning page-header__navigation__item__count">1</span>
+            </a>
+        </li>
+    </ul>
+{% endblock %}
+
+{# TODO: Add common filters panel??? #}
+{% block filters %}
+{% endblock %}
+
+{% block content %}
+    <div class="content--fixed container--comfy">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="plugin-list__header__heading mb-2">Installed</div>
+
+                <div class="card-deck my-2 mb-4">
+
+                    <div class="card mb-1">
+                        <div class="card-header">
+                            <div class="d-flex flex-row justify-content-between">
+                                <a href="https://github.com/ucrm-plugins/notifications" target="_blank">
+                                    <h5 class="mb-0">Admin Notifications</h5>
+                                </a>
+                                <span class="switch switch-sm">
+                                    <input type="checkbox" class="switch" id="switch-id" checked>
+                                    <label class="mb-0" for="switch-id"></label>
+                                </span>
+                            </div>
+
+                            <div class="d-flex flex-row justify-content-between">
+                                <small class="text-muted">by <a href="mailto:rspaeth@mvqn.net">Ryan Spaeth</a></small>
+                                <small class="text-muted">Enabled</small>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Last updated 3 mins ago</small>
+                        </div>
+                    </div>
+
+                    <div class="card mb-1">
+
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Last updated 3 mins ago</small>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+
+
+
+
+                <div class="plugin-list__header__heading">Available</div>
+
+
+                &nbsp;
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <label for="editor">
+        Editor
+    </label>
+    <textarea name="content" id="editor">
+        Sample Content!
+    </textarea>
+
+    <script src="//cdn.ckeditor.com/4.11.2/full/ckeditor.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+
+
+
+    <script>
+        CKEDITOR.plugins.addExternal( "token", "https://ucrm.dev.mvqn.net/_plugins/marketplace/public.php?/ckeditor/plugins/token-replacement/", 'plugin.js' );
+        CKEDITOR.plugins.addExternal( "codemirror", "https://ucrm.dev.mvqn.net/_plugins/marketplace/public.php?/ckeditor/plugins/codemirror/", 'plugin.js' );
+        //CKEDITOR.plugins.addExternal( "layoutmanager", "https://ucrm.dev.mvqn.net/_plugins/marketplace/public.php?/ckeditor/plugins/layoutmanager/", 'plugin.js' );
+        //CKEDITOR.plugins.addExternal( "basewidget", "https://ucrm.dev.mvqn.net/_plugins/marketplace/public.php?/ckeditor/plugins/basewidget/", 'plugin.js' );
+
+        let editor = CKEDITOR.replace("editor", {
+            removeButtons: "Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField",
+
+
+
+            extraPlugins: "token,codemirror",
+
+            availableTokens: [
+                ["user", "user"],
+                ["user.firstName", "user.firstName"],
+                ["user.lastName", "user.lastName"],
+            ],
+            tokenStart: "\{\{",
+            tokenEnd: "\}\}",
+
+            entities: false,
+
+            codemirror: {
+
+
+                mode: "twig"
+            },
+
+            layoutmanager: {
+
+
+
+            }
+
+
+
+
+        });
+
+        //console.log(editor);
+
+        /*
+        CodeMirror.defineMode("htmltwig", function(config, parserConfig) {
+            return CodeMirror.overlayMode(CodeMirror.getMode(config, parserConfig.backdrop || "text/html"), CodeMirror.getMode(config, "twig"));
+        });
+        */
+
+
+
+        /*
+        editor.on('autoplaceholderTokenMatched', function(e) {
+            var $element = e.data.$element;
+            var tokenData = e.data.tokenData;
+            //$element.attr('rel', '{' + tokenData.value + '}');
+            //console.log($element);
+        });
+        */
+
+
+
+    </script>
+
+    <script>
+        $(function () {
+            /*
+            $('.toggle').bootstrapToggle({
+                on: "",
+                off: ""
+            })
+            */
+        });
+
+
+    </script>
+
+{% endblock %}
+

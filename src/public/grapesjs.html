@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GrapeJS Tests</title>
+    <base href="https://ucrm.dev.mvqn.net/_plugins/marketplace/public/">
+
+    <!--<link rel="stylesheet" href="//unpkg.com/grapesjs/dist/css/grapes.min.css">-->
+    <link rel="stylesheet" href="grapesjs/css/grapes.min.css">
+    <link rel="stylesheet" href="grapesjs/grapesjs-preset-webpage.min.css">
+
+    <!--<script src="//unpkg.com/grapesjs"></script>-->
+    <script src="grapesjs/grapes.min.js"></script>
+    <script src="grapesjs/grapesjs-preset-webpage.min.js"></script>
+    <!--<script src="public/grapesjs/grapesjs-plugin-ckeditor.min.js"></script>-->
+
+    <style>
+        body {
+            margin: 0;
+        }
+
+        /* Editor Container */
+        .gjs-editor-cont {
+            min-width: 768px;
+            height: 100vh !important; /* FORCED */
+        }
+
+        /* Commands Panel */
+        .gjs-pn-commands {
+            width: 75%;
+            display: none;
+        }
+
+        /* Devices Panel */
+        .gjs-pn-devices-c {
+            width: 25%;
+            z-index: 4;
+        }
+        .gjs-pn-devices-c > .gjs-pn-buttons {
+            justify-content: flex-start;
+        }
+
+        /* Options Panel */
+        .gjs-pn-options {
+            left: 25%;
+            right: 25%;
+        }
+        .gjs-pn-options > .gjs-pn-buttons {
+            justify-content: flex-end;
+        }
+
+        /* Views Panel */
+        .gjs-pn-views-container {
+            width: 25%;
+        }
+        .gjs-pn-views {
+            width: 25%;
+        }
+        .gjs-pn-views > .gjs-pn-buttons {
+            justify-content: flex-start;
+        }
+
+        /* Canvas Panel */
+        .gjs-cv-canvas {
+            width: 75%;
+            height: calc(100vh - 42px);
+        }
+
+        /* TODO: Make a mobile friendly layout ??? */
+
+        #notice {
+            display: none;
+            width: 100vw;
+            height: 100vh;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+        }
+        #notice > div {
+            /* Until Bootstrap is added */
+            width: 75%;
+            margin: auto;
+        }
+
+        @media screen and (max-width: 767px) {
+            #gjs {
+                display: none;
+            }
+            #notice {
+                display: flex;
+            }
+        }
+
+
+
+    </style>
+
+</head>
+<body>
+
+    <div id="notice" >
+        <div class="panel panel-primary">
+            <p>
+                Your current browser resolution is too small to display the editor.<br/>
+                Try running the editor in fullscreen mode pressing F11 or by clicking the link below.
+            </p>
+            <a href="#" onclick="return openFullscreen();">Fullscreen</a>
+        </div>
+    </div>
+
+    <div id="gjs"></div>
+
+
+
+    <script>
+
+        const editor = grapesjs.init({
+            container : "#gjs",
+            plugins: [
+                "gjs-preset-webpage"
+            ],
+            pluginsOpts: {
+                "gjs-preset-webpage": {
+                    // options
+                }
+            },
+            styleManager: {
+                // Clear out the duplicated/default sections!
+                sectors: []
+            }
+        });
+
+
+        /* Get the element you want displayed in fullscreen mode (a video in this example): */
+        var elem = document;
+
+        /* When the openFullscreen() function is executed, open the video in fullscreen.
+        Note that we must include prefixes for different browsers, as they don't support the requestFullscreen method yet */
+        function openFullscreen() {
+
+            editor.runCommand("fullscreen");
+            return false;
+
+        }
+
+    </script>
+
+</body>
+</html>

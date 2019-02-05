@@ -1,0 +1,52 @@
+{% extends "common/ucrm.twig" %}
+
+{% block breadcrumbs %}
+    <h1>
+        <a href="?">Marketplace</a>
+    </h1>
+{% endblock %}
+
+{% block buttons %}
+    <a href="https://github.com/ucrm-plugins/marketplace" target="_blank" class="button button--icon-only">
+        <img src="?/images/github/logo-32px.png" alt="GitHub" height=16>
+    </a>
+{% endblock %}
+
+{# TODO: Fix an issue where scrollbar appears when using "extras"! #}
+{% block extras %}
+{% endblock %}
+
+{% block navigation %}
+    <ul>
+        <li>
+            <a href="?/index.twig">
+                Add-Ons
+                {# TODO: Create code to dynamically check for updates of installed Add-Ons and output count to the badge! #}
+                <span class="badge badge--warning page-header__navigation__item__count">1</span>
+            </a>
+        </li>
+        <li class="selected">
+            <a href="?/account.twig">
+                Account
+                {# TODO: Create code to dynamically check for account notifications and output count to the badge! #}
+                <span class="badge badge--warning page-header__navigation__item__count">1</span>
+            </a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div class="content--fixed container--comfy">
+        <div class="row">
+            <div class="col--md12">
+                <div class="card">
+                    <div class="card-header">
+                        Testing
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app" style="height:calc(100vh - 16px);"></div>
+
+
+<script>
+    // Plugin Settings
+    var TOPOL_OPTIONS = {
+        id: "#app",
+        authorize: {
+            apiKey: "mBdMKEoLhb7y3LKLQVzLKLtvcmBOfDLr50Kk0sTgyGfZ364BAR0bXvygehEo",
+            userId: "rspaeth",
+        },
+        templateId: 1, // To load from the TOPOL cloud storage!
+        language: "en",
+        light: true,
+
+        callbacks: {
+            onSaveAndClose: function(json, html) {
+                // HTML of the email
+                console.log(html);
+                // JSON object of the email
+                console.log(json); // For saving/loading
+                // Implement your own close callback
+                // Data variable contains the response data of the save request
+            },
+            onSave: function(json, html) {
+                // HTML of the email
+                console.log(html);
+                // JSON object of the email
+                console.log(json); // For saving/loading
+            },
+            onTestSend: function(email, json, html) {
+                console.log(html);
+                console.log(json); // For saving/loading
+                // Email of the recipient
+                console.log(email);
+
+                // NOTE: Be sure to run the template through the Twig engine to propagate any dynamic content!
+            },
+
+        },
+
+        mergeTags: [
+            {
+                name: "User",
+                items: [
+                    {
+                        value: "{{user.firstName}}", // Text to be inserted
+                        text: "First Name", // Shown text in the menu
+                        label: "User's first name" // Shown description title in the menu
+                    },
+                    {
+                        value: "{{user.lastName}}",
+                        text: "Last Name",
+                        label: "User's last name"
+                    }
+                ]
+            },
+            {
+                name: "Client",
+                items: [
+                    { value: "<a href=\"*|UNSUBSCRIBE_LINK|*\">Unsubscribe</a>",
+                        text: "Unsubscribe",
+                        label: "Unsubscribe link"
+                    },
+                    { value: "<a href=\"*|WEB_VERSION_LINK|*\">Web version</a>",
+                        text: "Web version",
+                        label: "Web version link"
+                    }
+                ]
+            }
+        ],
+
+        premadeBlocks: {
+            'headers': [
+                {
+                    //'img': 'url', // Image url, for best experience use width > 330 px
+                    "name": "My Test Header!", // Or name if not image available
+                    "definition": [
+                        {
+                            "tagName": "mj-section",
+                            "attributes": {
+                                "full-width": false,
+                                "padding": "9px 0px 9px 0px",
+                                "background-color": "#000000"
+                            },
+                            "type": null,
+                            "children": [
+                                {
+                                    "tagName": "mj-column",
+                                    "attributes": {
+                                        "width": "33.333333%",
+                                        "vertical-align": "top"
+                                    },
+                                    "children": [
+                                        {
+                                            "tagName": "mj-social",
+                                            "attributes": {
+                                                "display": "facebook:url twitter:url google:url","padding":"10px 10px 10px 30px","text-mode":"false","icon-size":"25px","base-url":"https://s3-eu-west-1.amazonaws.com/ecomail-assets/editor/social-icos/simplewhite/","facebook-href":"https://www.facebook.com/PROFILE","facebook-icon-color":"none","facebook-alt":"Sdílet","twitter-href":"https://www.twitter.com/PROFILE","twitter-icon-color":"none","twitter-alt":"","google-href":"https://plus.google.com/PROFILE","google-icon-color":"none","google-alt":"","instagram-icon-color":"none","linkedin-icon-color":"none","align":"left","youtube-icon-color":"none","youtube-alt":"","youtube-icon":"https://s3-eu-west-1.amazonaws.com/ecomail-assets/editor/social-icos/simplewhite/youtube.png","youtube-href":"https://www.youtube.com","containerWidth":200},"uid":"H1lqIiX4lm"}],"uid":"SJ3I0XVx7"},{"tagName":"mj-column","attributes":{"width":"33.333333%","vertical-align":"top"},"children":[{"tagName":"mj-image","attributes":{"src":"https://storage.googleapis.com/jan50/blackberrylogo.png","padding":"19px 10px 10px 10px","alt":"","href":"","containerWidth":200,"width":100,"widthPercent":50},"uid":"rkEyL-HeQ"}],"uid":"r1e280m4xQ"},{"tagName":"mj-column","attributes":{"width":"33.333333%","vertical-align":"top"},"children":[{"tagName":"mj-spacer","attributes":{"height":15,"containerWidth":200},"uid":"rJfqLiXEgm"}],"uid":"B1W380QVxX"}],"layout":1,"backgroundColor":"","backgroundImage":"","paddingTop":0,"paddingBottom":0,"paddingLeft":0,"paddingRight":0,"uid":"rkqIjQNe7"} // MJML JSON
+                    ]
+                }
+            ]
+            // content, ecomm, footers ...
+        }
+    };
+
+    //TopolPlugin.init(TOPOL_OPTIONS);
+    //TopolPlugin.load('json-template'); // To load JSON format use this load function with the JSON template. STRING FORMAT
+    //TopolPlugin.save(); // To force the save -> the onSave callback will be called with the JSON and HTML of the template
+    //TopolPlugin.togglePreview(); // Toggles the mode of Preview
+    //TopolPlugin.chooseFile('http://url.to/picture.png'); // When the onOpenFileManager is called, it is awaiting to call this function with the url of the chosen file.
+
+
+
+
+    // Plugin script
+    "use strict";!function(t){window.TopolPlugin||(window.TopolPlugin=new function(){var t={},n={},i={},o=[],a=!1;function e(t){"callback"===t.data.type&&"function"==typeof i.callbacks[t.data.action]&&i.callbacks[t.data.action].apply(window,t.data.data.args)}function c(n,i){a?t.contentWindow.postMessage({action:n,data:i},"*"):o.push({action:n,data:i})}this.init=function(l,s){i=l||{},(n=document.querySelectorAll(i.id)[0])?((t=document.createElement("iframe")).width="100%",t.height="100%",t.frameBorder="0",t.src="https://d5aoblv5p04cg.cloudfront.net/editor/plugin/index.html",n.appendChild(t),parsedOptions=JSON.parse(JSON.stringify(i)),window.addEventListener("message",e),t.onload=function(){a=!0;for(var t=o.length,n=0;n<t;n++){var i=o.shift();c(i.action,i.data)}}):console.error("Unable to find the element "+i.id),c("init",{options:Object.assign({},l,{callbacks:null})})},this.save=function(){c("save",{})},this.load=function(t){c("load",{json:t})},this.togglePreview=function(){c("togglePreview",{})},this.chooseFile=function(t){c("chooseFile",{url:t})}})}();
+
+    // Plugin start
+    TopolPlugin.init(TOPOL_OPTIONS);
+
+
+
+</script>
+
+</body>
+</html>

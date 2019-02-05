@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="editor" style="height:calc(100vh - 16px);"></div>
+
+
+<script src="https://editor.unlayer.com/embed.js"></script>
+<script>
+    unlayer.init({
+        id: 'editor',
+        projectId: 2021,
+        templateId: "5565",
+        displayMode: 'email',
+        mergeTags: [
+            {name: "First Name", value: "{{first_name}}"},
+            {name: "Last Name", value: "{{last_name}}"}
+        ]
+    })
+</script>
+
+</body>
+</html>

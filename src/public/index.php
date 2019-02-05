@@ -2,6 +2,9 @@
 declare(strict_types=1);
 require_once __DIR__ . "/../vendor/autoload.php";
 
+use UCRM\UI\Header;
+
+Header::renderHeader();
 
 
 echo "Home Page<br/>";

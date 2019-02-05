@@ -2,9 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Test</title>
+    <title>VueJS Tests</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!--<script src="https://unpkg.com/vue/dist/vue.js"></script>-->
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
 </head>
 <body>
-    This is a test page!
+    <div id="app">
+        {{ message }}
+
+        <ul>
+
+            <li><router-link to="/foo">Foo</router-link></li>
+            <li><router-link to="/bar">Bar</router-link></li>
+
+        </ul>
+
+        <router-view></router-view>
+    </div>
+
+    <script>
+        const Foo = { template: '<div>foo</div>' };
+        const Bar = { template: '<div>bar</div>' };
+
+        const routes = [
+            { path: '/foo', component: Foo },
+            { path: '/bar', component: Bar }
+        ];
+
+        const router = new VueRouter({
+            routes // short for `routes: routes`
+        });
+
+        const app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue!'
+            },
+            router
+        });
+    </script>
+
+
+
 </body>
 </html>

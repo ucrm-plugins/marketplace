@@ -10,8 +10,8 @@ use MVQN\Twig\Extensions\SwitchExtension;
 use UCRM\Common\Config;
 use UCRM\Common\Log;
 use UCRM\Common\Plugin;
-use UCRM\Twig\Extensions\PluginExtension;
-use UCRM\Slim\Middleware\QueryStringRouter;
+use UCRM\HTTP\Twig\Extensions\PluginExtension;
+use UCRM\HTTP\Slim\Middleware\QueryStringRouter;
 
 use App\Settings;
 
@@ -21,7 +21,6 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Http\Uri;
 use Slim\Views\TwigExtension;
-
 
 /**
  * bootstrap.php
@@ -45,6 +44,7 @@ Plugin::createSettings("App", "Settings");
 // ENVIRONMENT
 // =====================================================================================================================
 
+// IF an .env file exists in the project, THEN load it!
 if(file_exists(__DIR__."/../.env"))
     (new \Dotenv\Dotenv(__DIR__."/../"))->load();
 
@@ -53,7 +53,12 @@ if(file_exists(__DIR__."/../.env"))
 // =====================================================================================================================
 
 // Generate the REST API URL from either an ENV variable (including from .env file),  or fallback to localhost.
-$restUrl = rtrim(getenv("REST_URL") ?: Settings::UCRM_LOCAL_URL ?: "https://localhost/", "/")."/api/v1.0";
+$restUrl =
+    rtrim(
+        getenv("REST_URL") ?:                                                           // .env (or ENV variable)
+        Settings::UCRM_LOCAL_URL ?:                                                     // ucrm.json
+        (isset($_SERVER['HTTPS']) ? "https://localhost/" : "http://localhost/"),        // By initial request
+    "/")."/api/v1.0";
 
 // Configure the REST Client...
 RestClient::setBaseUrl($restUrl);
@@ -166,5 +171,6 @@ $container['logger'] = function (\Slim\Container $container)
 
 // Applied in Ascending order, bottom up!
 //$app->add(new \UCRM\Routing\Middleware\PluginAuthentication());
-$app->add(new QueryStringRouter());
+$app->add(new QueryStringRouter("/index.twig"));
+//$app->add(new QueryStringRouter("/test.html"));
 

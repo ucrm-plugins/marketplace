@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+
+    {# UCRM UI Stylesheets #}
+    <link rel="stylesheet" href="/assets/fonts/lato/lato.css?v=2.15.0-beta5">
+    <link rel="stylesheet" href="/assets/fonts/ubnt-icon/ubnt-icon.css?v=2.15.0-beta5">
+    <link rel="stylesheet" href="/assets/fonts/ucrm-icon/style.css?v=2.15.0-beta5">
+    <link rel="stylesheet" href="/assets/vendor/jquery-ui/themes/smoothness/jquery-ui.min.css?v=2.15.0-beta5">
+    <link rel="stylesheet" href="/assets/vendor/leaflet/leaflet.css?v=2.15.0-beta5">
+    <link rel="stylesheet" href="/dist/main.min.css?v=2.15.0-beta5">
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+          crossorigin="anonymous">
+
+    {# Override Bootstrap classes when necessary to keep similar UCRM formatting! #}
+    <style>
+        .content--inner {
+            background-color: #edf0f3;
+        }
+    </style>
+
+    {% block styles %}{% endblock %}
+
+    {# UCRM UI Scripts #}
+    <script type="text/javascript" src="/dist/jquery.min.js?v=2.15.0-beta5"></script>
+
+    {% block scripts %}{% endblock %}
+
+</head>
+
+<body>
+<div id="content" style="padding-top:0;"> {# Remove top padding that would normally push the content below the navbar #}
+    <div id="page-header" class="page-header page-header--has-background {% if block("navigation") is not empty %}page-header--has-navigation{% endif %}">
+        <div class="page-header__top">
+            <div class="page-header__left">
+                {% block breadcrumbs %}{% endblock %}
+                {% block buttons %}{% endblock %}
+            </div>
+            <div class="page-header__right">
+                {% block extras %}{% endblock %}
+            </div>
+        </div>
+        {% if block("navigation") is not empty %}
+        <div class="page-header__navigation">
+            {% block navigation %}{% endblock %}
+        </div>
+        {% endif %}
+    </div>
+
+    {% if block("content") is not empty %}
+        <div class="content--inner">
+            {% if block("filters") is not empty %}
+                <div class="row grid">
+                    <div class="col--md12">
+                        {% block filters %}{% endblock %}
+                    </div>
+                </div>
+            {% endif %}
+
+            {% block content %}{% endblock %}
+        </div>
+    {% endif %}
+</div>
+
+{# UCRM UI Scripts #}
+{#<script src="/dist/app.min.js?v=2.15.0-beta5" type="text/javascript"></script>#}
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.bundle.min.js"
+        integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP"
+        crossorigin="anonymous">
+</script>
+
+</body>
+</html>

@@ -5,7 +5,7 @@ require __DIR__ . "/bootstrap.php";
 
 use App\Settings;
 use App\Controllers;
-use UCRM\Slim\Controllers\Common;
+use UCRM\HTTP\Slim\Controllers\Common;
 
 /**
  * Use an immediately invoked function here, to avoid global namespace pollution...
