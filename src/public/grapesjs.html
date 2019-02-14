@@ -13,6 +13,8 @@
     <script src="grapesjs/grapes.min.js"></script>
     <script src="grapesjs/grapesjs-preset-webpage.min.js"></script>
     <!--<script src="public/grapesjs/grapesjs-plugin-ckeditor.min.js"></script>-->
+    <!--<script src="https://unpkg.com/grapesjs-custom-code"></script>-->
+    <script src="grapesjs/grapesjs-custom-code.min.js"></script>
 
     <style>
         body {
@@ -92,6 +94,16 @@
         }
 
 
+        /* Not sure why these are needed to fixup the line numbers spacing */
+
+        .CodeMirror-sizer {
+            margin-left: 29px !important;
+        }
+
+        .CodeMirror-gutter-wrapper {
+            left: -29px !important;
+        }
+
 
     </style>
 
@@ -117,11 +129,16 @@
         const editor = grapesjs.init({
             container : "#gjs",
             plugins: [
-                "gjs-preset-webpage"
+                "gjs-preset-webpage",
+                "grapesjs-custom-code"
             ],
             pluginsOpts: {
                 "gjs-preset-webpage": {
                     // options
+                },
+                "grapesjs-custom-code": {
+                    // options
+
                 }
             },
             styleManager: {
@@ -129,6 +146,9 @@
                 sectors: []
             }
         });
+
+
+
 
 
         /* Get the element you want displayed in fullscreen mode (a video in this example): */

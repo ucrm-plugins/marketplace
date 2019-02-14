@@ -620,16 +620,16 @@
         },
         {
             "name": "mvqn/rest",
-            "version": "1.4.1",
+            "version": "1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mvqn/rest.git",
-                "reference": "e20199c171e4df2520c386ee11b27c34f9e32461"
+                "reference": "2949215a972151fce5c0c03b292f6342b6754a14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mvqn/rest/zipball/e20199c171e4df2520c386ee11b27c34f9e32461",
-                "reference": "e20199c171e4df2520c386ee11b27c34f9e32461",
+                "url": "https://api.github.com/repos/mvqn/rest/zipball/2949215a972151fce5c0c03b292f6342b6754a14",
+                "reference": "2949215a972151fce5c0c03b292f6342b6754a14",
                 "shasum": ""
             },
             "require": {
@@ -663,7 +663,7 @@
                 }
             ],
             "description": "A simple REST Client library for interfacing with generic REST Endpoints.",
-            "time": "2018-12-10T02:10:02+00:00"
+            "time": "2019-02-13T22:02:04+00:00"
         },
         {
             "name": "mvqn/twig",
